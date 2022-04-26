@@ -39,6 +39,12 @@ Dinosaur(name='Apatosaurus', diet='Herbivore',
 
 
 app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
+
+
+@app.route('/')
+def root_api():
+    return "This is the root, type in any dinosaur names as the endpoints to see their information or /dinosaur for all dinosaurs."
 
 
 @app.route('/dinosaur/', methods=['GET', 'POST'])
@@ -48,13 +54,15 @@ def endpoint(id=None):
         if id:
             return jsonify(model_to_dict(Dinosaur.get(Dinosaur.id == id)))
         else:
-            dinosaurList = []
+            dinosaur_list = []
             for dinosaur in Dinosaur.select():
-                dinosaurList.append(model_to_dict(dinosaur))
-            return jsonify(dinosaurList)
+                dinosaur_list.append(model_to_dict(dinosaur))
+            return jsonify(dinosaur_list)
 
     if request.method == 'PUT':
-        return 'PUT request'
+        body = request.get_json()
+        Dinosaur.update(body).where(Dinosaur.id == id).execute()
+        return "Dinosaur " + str(id) + " has been updated."
 
     if request.method == 'POST':
         new_dinosaur = dict_to_model(Dinosaur, request.get_json())
@@ -62,6 +70,8 @@ def endpoint(id=None):
         return jsonify({"success": True})
 
     if request.method == 'DELETE':
-        return 'DELETE request'
+        Dinosaur.delete().where(Dinosaur.id == id).execute()
+        return "Dinosaur " + str(id) + " deleted."
 
-    app.run(debug=True)
+
+app.run(debug=True)
