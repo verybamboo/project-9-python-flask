@@ -14,9 +14,3 @@ Dinosaur(name='Triceratops', diet='Herbivore',
          length='8 Meters', weight='9 Metric Tons').save()
 Dinosaur(name='Tyrannosaurus-Rex', diet='Carnivore',
          length='12.4 Meters', weight='8.5 Metric Tons').save()
-Dinosaur(name="", diet="", length="", weight="").save()
-Dinosaur(name="", diet="", length="", weight="").save()
-Dinosaur(name="", diet="", length="", weight="").save()
-Dinosaur(name="", diet="", length="", weight="").save()
-Dinosaur(name="", diet="", length="", weight="").save()
-Dinosaur(name="", diet="", length="", weight="").save()
